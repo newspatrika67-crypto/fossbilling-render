@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: onserverhost-billing
+    env: php
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: vendor/bin/heroku-php-apache2 public/
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fossbilling-db
+          property: connectionString
+
+databases:
+  - name: fossbilling-db
+    databaseName: fossbilling
+    user: fossuser
+    plan: free
